@@ -1,4 +1,18 @@
+using Domain.Interfaces;
+using Infrastructure.Configuracao;
+using Infrastructure.Repositorios;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<ContextDb>(opts =>
+    opts.UseMySQL(builder.Configuration.GetConnectionString("ConnectionString")));
+
+
+// INTERFACE E REPOSITORIO
+builder.Services.AddSingleton(typeof(IGeneric<>), typeof(RepositorioGenerico<>));
+builder.Services.AddSingleton<IHeroi, RepositorioHeroi>();
 
 // Add services to the container.
 
