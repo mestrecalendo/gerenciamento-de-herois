@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using Domain.Interfaces;
 using Domain.Models;
 using Heroi.Api.DTOs;
@@ -13,13 +13,11 @@ namespace Heroi.Api.Controllers
     public class HeroisController : ControllerBase
     {
         private readonly IHeroi _interfaceHeroi;
-        private IMapper _mapper;
         private ContextDb _context;
-        public HeroisController(IHeroi InterfaceHeroi, ContextDb ContextDb, IMapper mapper)
+        public HeroisController(IHeroi InterfaceHeroi, ContextDb ContextDb)
         {
             _interfaceHeroi = InterfaceHeroi;
             _context = ContextDb;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,9 +27,7 @@ namespace Heroi.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Herois), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CadastroHeroi([FromBody] CreateHeroiDto heroi)
+        public async Task<ActionResult> CadastroHeroi([FromBody] CreateHeroiDto heroi)
         {
 
             Herois novoHeroi = new()
@@ -48,7 +44,7 @@ namespace Heroi.Api.Controllers
                 await _interfaceHeroi.Add(novoHeroi);
                 await InsertSuperpoderes(novoHeroi, heroi);
                 _context.SaveChanges();
-                return CreatedAtAction("CadastroHeroi", new { novoHeroi.Id }, heroi);
+                return CreatedAtAction(nameof(GetHeroiPorId), new { novoHeroi.Id }, novoHeroi);
             }
             catch (Exception e)
             {
@@ -85,14 +81,14 @@ namespace Heroi.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReadHeroiDto>> GetHeroiPorId(int id)
         {
-            var heroi = await _interfaceHeroi.GetById(id);
-            if (heroi != null)
+            var heroi = _context.Herois
+                            .Include(eOne => eOne.Superpoderes).FirstOrDefault(p => p.Id == id); 
+            if (heroi is null)
             {
-                var super = _context.Superpoderes.Where(mc => mc.Id == id).Select(mc => mc.Superpoder).ToList();
-                return Ok(heroi);
+                return NotFound();
 
             }
-            return NotFound();
+            return Ok(heroi);
         }
 
         [HttpPut("{id}")]

@@ -14,6 +14,6 @@ namespace Domain.Models
         public DateTime DataNascimento { get; set; }
         public float Altura { get; set; }
         public float Peso { get; set; }
-        public ICollection<HeroisSuperpoderes> Superpoderes { get; set; }
+        public virtual ICollection<HeroisSuperpoderes> Superpoderes { get; set; }
     }
 }

@@ -22,6 +22,6 @@ namespace Heroi.Api.DTOs
         public float Peso { get; set; }
 
         [Required(ErrorMessage = "Informe 1 ou mais superpoderes")]
-        public List<CreateSuperpoderDto> Superpoderes { get; set; }
+        public virtual ICollection<CreateSuperpoderDto> Superpoderes { get; set; }
     }
 }

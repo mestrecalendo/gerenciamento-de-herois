@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<ContextDb>(opts =>
-    opts.UseMySQL(builder.Configuration.GetConnectionString("ConnectionString")));
+    opts.UseLazyLoadingProxies().UseMySQL(builder.Configuration.GetConnectionString("ConnectionString")));
 
 
 // INTERFACE E REPOSITORIO
@@ -19,9 +19,6 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
-
-// Add services to the container.
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

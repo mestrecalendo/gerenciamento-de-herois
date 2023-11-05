@@ -5,7 +5,7 @@ namespace Heroi.Api.DTOs
 {
     public class ReadHeroiDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Nome { get; set; }
 
         public string NomeHeroi { get; set; }
@@ -16,6 +16,6 @@ namespace Heroi.Api.DTOs
 
         public float Peso { get; set; }
 
-        public List<ReadSuperpoderDto> Superpoderes { get; set; }
+        public virtual ICollection<ReadSuperpoderDto> Superpoderes { get; set; }
     }
 }

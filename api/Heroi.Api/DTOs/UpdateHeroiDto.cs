@@ -17,6 +17,6 @@ namespace Heroi.Api.DTOs
 
         public float Peso { get; set; }
 
-        public ICollection<Superpoderes> Superpoderes { get; set; }
+        public virtual ICollection<CreateSuperpoderDto> Superpoderes { get; set; }
     }
 }

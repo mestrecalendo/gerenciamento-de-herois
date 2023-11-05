@@ -27,9 +27,6 @@ namespace Infrastructure.Configuracao
         {
             builder.Entity<HeroisSuperpoderes>().HasKey(sessao => new { sessao.HeroiId, sessao.SuperpoderId });
 
-            builder.Entity<HeroisSuperpoderes>().HasOne(sessao => sessao.Superpoder)
-             .WithMany(cinema => cinema.Herois)
-             .HasForeignKey(sessao => sessao.SuperpoderId);
 
             builder.Entity<HeroisSuperpoderes>().HasOne(sessao => sessao.Heroi)
                 .WithMany(cinema => cinema.Superpoderes)
