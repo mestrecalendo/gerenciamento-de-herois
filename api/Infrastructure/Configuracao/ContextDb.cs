@@ -12,6 +12,7 @@ namespace Infrastructure.Configuracao
 
         public DbSet<Herois> Herois { get; set; }
         public DbSet<Superpoderes> Superpoderes { get; set; }
+        public DbSet<HeroisSuperpoderes> HeroisSuperpoderes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +21,21 @@ namespace Infrastructure.Configuracao
                 optionsBuilder.UseMySQL(GetConnectionString());
                 base.OnConfiguring(optionsBuilder);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<HeroisSuperpoderes>().HasKey(sessao => new { sessao.HeroiId, sessao.SuperpoderId });
+
+            builder.Entity<HeroisSuperpoderes>().HasOne(sessao => sessao.Superpoder)
+             .WithMany(cinema => cinema.Herois)
+             .HasForeignKey(sessao => sessao.SuperpoderId);
+
+            builder.Entity<HeroisSuperpoderes>().HasOne(sessao => sessao.Heroi)
+                .WithMany(cinema => cinema.Superpoderes)
+                .HasForeignKey(sessao => sessao.HeroiId);
+
+            base.OnModelCreating(builder);
         }
 
         private static string GetConnectionString()

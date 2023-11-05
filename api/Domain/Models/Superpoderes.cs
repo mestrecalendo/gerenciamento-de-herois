@@ -11,5 +11,6 @@ namespace Domain.Models
         public int Id { get; set; }
         public string Superpoder { get; set; }
         public string Descricao { get; set; }
+        public ICollection<HeroisSuperpoderes> Herois { get; set; }
     }
 }

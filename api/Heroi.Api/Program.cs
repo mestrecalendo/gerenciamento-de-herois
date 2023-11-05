@@ -3,6 +3,7 @@ using Infrastructure.Configuracao;
 using Infrastructure.Repositorios;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -11,10 +12,16 @@ builder.Services.AddDbContext<ContextDb>(opts =>
 
 
 // INTERFACE E REPOSITORIO
-builder.Services.AddSingleton(typeof(IGeneric<>), typeof(RepositorioGenerico<>));
-builder.Services.AddSingleton<IHeroi, RepositorioHeroi>();
+builder.Services.AddScoped(typeof(IGeneric<>), typeof(RepositorioGenerico<>));
+builder.Services.AddScoped<IHeroi, RepositorioHeroi>();
+
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
