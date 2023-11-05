@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces
 {
-    public interface IHeroi : IGeneric<Heroi>
+    public interface IHeroi : IGeneric<Herois>
     {
     }
 }

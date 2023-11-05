@@ -10,7 +10,21 @@ namespace Infrastructure.Configuracao
         {
         }
 
-        public DbSet<Heroi> Herois { get; set; }
-        public DbSet<Superpoder> Superpoderes { get; set; }
+        public DbSet<Herois> Herois { get; set; }
+        public DbSet<Superpoderes> Superpoderes { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySQL(GetConnectionString());
+                base.OnConfiguring(optionsBuilder);
+            }
+        }
+
+        private static string GetConnectionString()
+        {
+            return "server=localhost;database=super_herois;User=root;Password=root;";
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Superpoder
+    public class Superpoderes
     {
         public int Id { get; set; }
         public string Superpoder { get; set; }

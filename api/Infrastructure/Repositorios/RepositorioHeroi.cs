@@ -4,7 +4,7 @@ using Domain.Models;
 namespace Infrastructure.Repositorios
 {
 
-    public class RepositorioHeroi : RepositorioGenerico<Heroi>, IHeroi
+    public class RepositorioHeroi : RepositorioGenerico<Herois>, IHeroi
     {
     }
 }
