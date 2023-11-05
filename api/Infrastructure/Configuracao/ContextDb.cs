@@ -16,9 +16,11 @@ namespace Infrastructure.Configuracao
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging();
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySQL(GetConnectionString());
+
                 base.OnConfiguring(optionsBuilder);
             }
         }
