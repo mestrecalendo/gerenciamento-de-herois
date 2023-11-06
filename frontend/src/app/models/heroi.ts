@@ -5,7 +5,7 @@ export class Heroi{
   nome: string;
   nomeHeroi: string;
   dataNascimento: Date;
-  Altura: number;
-  Peso: number;
-  Superpoderes: Array<Superpoderes>
+  altura: number;
+  peso: number;
+  superpoderes: Array<any>
 }

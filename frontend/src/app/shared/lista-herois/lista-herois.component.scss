@@ -4,11 +4,15 @@
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 
   .example-card {
     min-width: 400px;
+  }
+
+  mat-card-subtitle{
+color: rgb(172, 37, 172);
   }
 
   .mdc-card {
