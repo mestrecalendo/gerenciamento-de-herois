@@ -1,5 +1,9 @@
 <mat-toolbar>
   <span>Gerenciamento de Herois</span>
+  <button mat-fab extended color="primary" [routerLink]="['/cadastrar-heroi']">
+    <mat-icon>add</mat-icon>
+    Cadastrar Herói
+  </button>
 </mat-toolbar>
 <main>
   <router-outlet></router-outlet>

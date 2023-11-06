@@ -15,7 +15,8 @@ builder.Services.AddDbContext<ContextDb>(opts =>
 
 // INTERFACE E REPOSITORIO
 builder.Services.AddScoped(typeof(IGeneric<>), typeof(RepositorioGenerico<>));
-builder.Services.AddScoped<IHeroi, RepositorioHeroi>();
+builder.Services.AddSingleton<IHeroi, RepositorioHeroi>();
+builder.Services.AddSingleton<ISuperpoder, RepositorioSuperpoderes>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>

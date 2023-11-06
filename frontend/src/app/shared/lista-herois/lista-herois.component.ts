@@ -19,75 +19,6 @@ export class ListaHeroisComponent {
   private listaHerois?: any;
   public getAllHerois: any;
 
-  public lista:any = [
-    {
-      "superpoderes": [
-        {
-          "superpoder": {
-            "id": 3,
-            "superpoder": "Poderes de gelo",
-            "descricao": "congelar coisas, raio congelante"
-          },
-          "heroiId": 44,
-          "superpoderId": 3
-        },
-        {
-          "superpoder": {
-            "id": 4,
-            "superpoder": "Psiquismo",
-            "descricao": "Controlar seres com vida através da mente"
-          },
-          "heroiId": 44,
-          "superpoderId": 4
-        }
-      ],
-      "id": 44,
-      "nome": "testeee",
-      "nomeHeroi": "string",
-      "dataNascimento": "2023-11-05T22:10:27",
-      "altura": 0.0,
-      "peso": 0.0
-    },
-    {
-      "superpoderes": [
-        {
-          "superpoder": {
-            "id": 2,
-            "superpoder": "Magnetismo",
-            "descricao": "Controle de Metais"
-          },
-          "heroiId": 45,
-          "superpoderId": 2
-        },
-        {
-          "superpoder": {
-            "id": 4,
-            "superpoder": "Psiquismo",
-            "descricao": "Controlar seres com vida através da mente"
-          },
-          "heroiId": 45,
-          "superpoderId": 4
-        },
-        {
-          "superpoder": {
-            "id": 5,
-            "superpoder": "Tecnopata",
-            "descricao": "Controlar aparelhos eletrônicos com a mente"
-          },
-          "heroiId": 45,
-          "superpoderId": 5
-        }
-      ],
-      "id": 45,
-      "nome": "afs",
-      "nomeHeroi": "string",
-      "dataNascimento": "2023-11-05T22:10:27",
-      "altura": 0.0,
-      "peso": 0.0
-    }
-  ]
-
-
   constructor(private heroiService: HeroiService,private router: Router) { }
 
   ngOnInit(): void {
@@ -98,7 +29,6 @@ export class ListaHeroisComponent {
       },
       error: (error: any) => {
         console.log(error);
-        console.log(this.lista);
       }
     });
   }

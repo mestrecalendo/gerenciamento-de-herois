@@ -16,9 +16,11 @@ namespace Heroi.Api.DTOs
         public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "Altura é obrigatório")]
+        [Range(1, 99999)]
         public float Altura { get; set; }
 
         [Required(ErrorMessage = "Peso é obrigatório")]
+        [Range(1, 99999)]
         public float Peso { get; set; }
 
         [Required(ErrorMessage = "Informe 1 ou mais superpoderes")]

@@ -8,11 +8,11 @@ namespace Heroi.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class SuperpoderController : ControllerBase
+    public class SuperpoderController
     {
         private readonly ISuperpoder _interfaceSuperpoder;
 
-        public SuperpoderController(ISuperpoder InterfaceSuperpoder, ContextDb ContextDb)
+        public SuperpoderController(ISuperpoder InterfaceSuperpoder)
         {
             _interfaceSuperpoder = InterfaceSuperpoder;
         }

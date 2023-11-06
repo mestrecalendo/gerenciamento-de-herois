@@ -25,7 +25,7 @@ namespace Heroi.Api.Controllers
         {
             if (_context.Herois == null)
             {
-                return NotFound();
+                return NotFound("Nenhum Herói Cadastrado");
             }
 
             var heroi = await _context.Herois.ToListAsync();
@@ -37,6 +37,11 @@ namespace Heroi.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CadastroHeroi([FromBody] CreateHeroiDto heroi)
         {
+            var heroiConsultado = await _context.Herois.FirstOrDefaultAsync(x => x.NomeHeroi == heroi.NomeHeroi);
+            if (heroiConsultado != null)
+            {
+                return BadRequest($"Nome de Super Herói {heroiConsultado.NomeHeroi}, já existe na base de dados");
+            }
 
             Herois novoHeroi = new()
             {
@@ -80,6 +85,10 @@ namespace Heroi.Api.Controllers
             var heroiConsultado = await _context.Herois.Include(x=>x.Superpoderes).FirstOrDefaultAsync(x => x.Id == id);
 
             if (heroiConsultado == null) return NotFound();
+            if (heroiConsultado.NomeHeroi == novoHeroi.NomeHeroi)
+            {
+                return BadRequest($"Nome de Super Herói {heroiConsultado.NomeHeroi}, já existe na base de dados");
+            }
 
             try
             {
@@ -92,14 +101,15 @@ namespace Heroi.Api.Controllers
                 
                 await UpdateSuperpoderes(novoHeroi, heroiConsultado);
                 await _interfaceHeroi.Update(heroiConsultado);
-                return NoContent();
+                await _context.SaveChangesAsync();
+                return Ok(heroiConsultado);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
 
-            await _context.SaveChangesAsync();
+            
 
         }
 
