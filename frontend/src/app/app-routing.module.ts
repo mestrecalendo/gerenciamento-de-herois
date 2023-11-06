@@ -4,6 +4,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastroComponent } from './modules/cadastro/cadastro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),HttpClientModule,FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,MatSnackBarModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SuperpoderesService } from 'src/app/services/superpoderes.service';
 import { idade } from './validatorData';
 import {MatSelectModule} from '@angular/material/select';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-formulario',
@@ -30,13 +31,13 @@ export class FormularioComponent implements OnInit {
   listaSuperpoderes?: Superpoderes[];
   startDate = new Date(1990, 0, 1);
 
-  constructor(private superpoderesService: SuperpoderesService, private heroiService: HeroiService, private router: ActivatedRoute, private route: Router, private formBuilder: FormBuilder) {
+  constructor(private superpoderesService: SuperpoderesService, private heroiService: HeroiService, private router: ActivatedRoute, private route: Router, private formBuilder: FormBuilder,private dialogService: DialogService) {
     this.superpoderesService.ListarSuperpoderes().subscribe({
       next: (data) => {
         this.listaSuperpoderes = data;
       },
       error: (error: any) => {
-        console.log(error);
+        this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
       }
     }
     )
@@ -74,7 +75,7 @@ export class FormularioComponent implements OnInit {
           this.HeroiForm.get('superpoderes')?.setValue(listSuperpoder);
         },
         error: (error: any) => {
-        console.log(error)
+          this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
         }
       });
     }
@@ -114,11 +115,10 @@ export class FormularioComponent implements OnInit {
   this.heroiService.cadastrarNovoHeroi(novoHeroi).subscribe({
       complete: () => {
         this.route.navigate(['/'])
-
+        this.dialogService.openSnackBar("Herói salvo com sucesso!", "OK", 4000)
       },
       error: (error: any) => {
-        console.log(error);
-
+        this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
       }
     }
     )
@@ -146,15 +146,13 @@ export class FormularioComponent implements OnInit {
       superpoderes: listSuperpoder,
     };
 
-    console.log(novoHeroi);
-
     this.heroiService.AtualizarHeroi(this.HeroiId, novoHeroi).subscribe({
       complete: () => {
         this.route.navigate(['/'])
-
+        this.dialogService.openSnackBar("Herói salvo com sucesso!", "OK", 4000)
       },
       error: (error: any) => {
-
+        this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
       }
     }
     )

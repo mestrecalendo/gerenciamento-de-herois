@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { SearchInputComponent } from '../search-input/search-input.component';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-lista-herois',
@@ -19,7 +20,7 @@ export class ListaHeroisComponent {
   private listaHerois?: any;
   public getAllHerois: any;
 
-  constructor(private heroiService: HeroiService,private router: Router) { }
+  constructor(private heroiService: HeroiService,private dialogService: DialogService,private router: Router) { }
 
   ngOnInit(): void {
     this.heroiService.ListarHerois().subscribe({
@@ -28,7 +29,7 @@ export class ListaHeroisComponent {
         this.getAllHerois = this.listaHerois
       },
       error: (error: any) => {
-        console.log(error);
+        this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
       }
     });
   }
@@ -38,10 +39,10 @@ export class ListaHeroisComponent {
     this.heroiService.ExcluirHeroi(id).subscribe({
       next: () => {
         this.ngOnInit();
-
+        this.dialogService.openSnackBar(JSON.stringify("Herói Excluído"), "OK", 4000)
       },
       error: (error: any) => {
-
+        this.dialogService.openSnackBar(JSON.stringify(error?.error), "OK", 4000)
       }
     })
   }
