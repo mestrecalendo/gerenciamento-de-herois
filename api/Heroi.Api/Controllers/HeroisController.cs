@@ -82,16 +82,17 @@ namespace Heroi.Api.Controllers
         [HttpPut("{id}")]
         public async Task<object> AtualizaHeroi(int id, [FromBody] UpdateHeroiDto novoHeroi)
         {
-            var heroiConsultado = await _context.Herois.Include(x=>x.Superpoderes).FirstOrDefaultAsync(x => x.Id == id);
+            var nomeHeroi = await _context.Herois.FirstOrDefaultAsync(x => x.NomeHeroi == novoHeroi.NomeHeroi);
 
-            if (heroiConsultado == null) return NotFound();
-            if (heroiConsultado.NomeHeroi == novoHeroi.NomeHeroi)
+            if (nomeHeroi != null && nomeHeroi.NomeHeroi == novoHeroi.NomeHeroi && id != nomeHeroi.Id)
             {
-                return BadRequest($"Nome de Super Herói {heroiConsultado.NomeHeroi}, já existe na base de dados");
+                return BadRequest($"Nome de Super Herói {nomeHeroi.NomeHeroi}, já existe na base de dados");
             }
 
             try
             {
+                var heroiConsultado = await _context.Herois.Include(x => x.Superpoderes).FirstOrDefaultAsync(x => x.Id == id);
+
                 heroiConsultado.Nome = novoHeroi.Nome;
                 heroiConsultado.NomeHeroi = novoHeroi.NomeHeroi;
                 heroiConsultado.DataNascimento = novoHeroi.DataNascimento;
